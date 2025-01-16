@@ -1,0 +1,504 @@
+/* General Styles */
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lexend", sans-serif; /* Use Lexend font */
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5; /* Light gray background for contrast */
+  color: #333; /* Dark gray for text */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  margin: 0;
+  background-color: #f5f5f5; /* Optional: Set a background color */
+  flex-direction: column; /* Ensure content flows top to bottom */
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333; /* Dark gray */
+  font-weight: 600;
+}
+
+/* Navigation Bar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff; /* White background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  z-index: 10;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #666; /* Medium gray for icons */
+  font-size: 20px;
+  margin: 0 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #000; /* Darker gray on hover */
+  transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.navbar i {
+  font-size: 22px; /* Icon size */
+}
+
+/* Content Section */
+.content {
+  margin-top: 80px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Login Box */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Login box styling */
+.login-box {
+  text-align: center;
+}
+
+.login-box h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Lexend", sans-serif; /* Use Lexend font */
+}
+
+.login-box form {
+  width: 100%;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: "Lexend", sans-serif;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.login-box input:focus {
+  border-color: #333; /* Dark gray border on focus */
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: #333; /* Dark gray */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Lexend", sans-serif;
+}
+
+.login-box button:hover {
+  background-color: #555; /* Slightly lighter gray on hover */
+}
+
+/* Flash Popup Styles */
+.flash-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e74c3c; /* Red background */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Lexend", sans-serif;
+  font-size: 14px;
+  animation: fadeInOut 4s ease forwards;
+}
+
+.flash-popup.hidden {
+  display: none;
+}
+
+/* Flash Popup Animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+}
+
+/* Calendar Styles */
+.calendar-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 30px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.calendar-current-date {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.calendar-navigation span {
+  cursor: pointer;
+  font-size: 28px;
+  color: #666; /* Medium gray */
+  border-radius: 50%;
+  padding: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.calendar-navigation span:hover {
+  background-color: #f0f0f0; /* Subtle gray hover */
+  transform: scale(1.2); /* Enlarge slightly on hover */
+}
+
+.calendar-body {
+  margin-top: 20px;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #555; /* Medium gray */
+  margin-bottom: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+  gap: 10px; /* Spacing between grid items */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.calendar-dates li {
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 50%; /* Ensures circular shape */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  color: #333; /* Dark gray for dates */
+  width: 40px; /* Fixed width for consistency */
+  height: 40px; /* Fixed height matching width */
+  display: flex; /* Flexbox for centering */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  text-align: center;
+  margin: 0 auto; /* Center the circle within its grid cell */
+}
+
+.calendar-dates li.inactive {
+  color: #ccc; /* Lighter gray for inactive dates */
+  cursor: default;
+}
+
+.calendar-dates li.active {
+  background-color: #333; /* Dark gray for active date */
+  color: white;
+}
+
+.calendar-dates li:hover:not(.inactive):not(.active) {
+  background-color: #eaeaea; /* Subtle hover effect */
+  transform: scale(1.1); /* Slight enlargement */
+}
+
+/* DASHBOARD ---------------------------------- */
+.content {
+  margin-top: 80px; /* Adjust for fixed navbar */
+  text-align: center;
+  padding: 20px;
+}
+
+.content h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.mood-section {
+  margin-top: 20px;
+}
+
+.mood-section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.mood-section form {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.mood-section form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.mood-section form input,
+.mood-section form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+}
+
+.mood-section form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mood-section form button:hover {
+  background-color: #555;
+}
+
+/* Mood Form Styling */
+.mood-form {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.mood-form h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.mood-form form {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.mood-form form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.mood-icons {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.mood-icons input[type="radio"] {
+  display: none; /* Hide the radio buttons */
+}
+
+.mood-icons .icon-label {
+  font-size: 40px;
+  cursor: pointer;
+  margin: 0 5px; /* Adjust spacing between icons */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mood-icons .icon-label:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+.mood-icons input[type="radio"]:checked + .icon-label {
+  transform: scale(1.3);
+  border: 2px solid #333;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.mood-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+}
+
+.mood-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mood-form button:hover {
+  background-color: #555;
+}
+
+/* Character Counter */
+.char-counter {
+  position: relative;
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  margin-top: -5px; /* Pull closer to the text area */
+  margin-right: 5px; /* Align with text area's padding */
+  color: #555; /* Default color */
+  transition: color 0.2s ease;
+  margin-bottom: 20px;
+}
+
+/* Turn red when exceeding limit */
+.char-counter.exceeded {
+  color: red;
+}
+
+/* Textbox Styling */
+textarea#note {
+  width: 100%; /* Full width */
+  height: 100px; /* Large enough for 150 characters */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  resize: none; /* Prevent resizing */
+  overflow: hidden; /* Prevent scrollbars */
+  outline: none;
+  box-sizing: border-box; /* Include padding in width/height */
+}
+
+/* Edit Button Styling */
+.edit-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333; /* Dark gray */
+  color: #fff; /* White text */
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #555; /* Slightly lighter gray on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.edit-button:active {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.overall-mood {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.overall-mood i {
+  font-size: 3rem;
+  margin-top: 10px;
+}
+
+.chart-section,
+.streak-section {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.chart-section canvas {
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+.streak-section {
+  text-align: center;
+  font-size: 1.2rem;
+}

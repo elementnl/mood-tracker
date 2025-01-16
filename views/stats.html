@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="icon" href="/favicon.png" type="image/png">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://kit.fontawesome.com/b53656fe6d.js" crossorigin="anonymous"></script>
+        <!-- Chart.js -->
+        <title>Analytics Dashboard</title>
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="/home"><i class="fa fa-home"></i></a>
+            <a href="/calendar"><i class="fa fa-calendar"></i></a>
+            <a href="/stats"><i class="fa fa-chart-simple"></i></a>
+            <a href="https://vd-one.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-heart"></i>
+            </a>
+        </nav>
+
+        <div class="content">
+            <h1>Analytics Dashboard</h1>
+
+            <div class="overall-mood">
+                <p>Your overall mood rating:</p>
+                <i id="overallMoodIcon" class="fas"></i>
+            </div>
+
+            <div class="chart-section">
+                <h2>Mood Distribution</h2><br>
+                <canvas id="moodDistributionChart"></canvas>
+            </div>
+
+            <div class="streak-section">
+                <h2>Current Streak</h2>
+                <p id="currentStreak">Loading streak data...</p>
+            </div>
+        </div>
+
+        <script src="/stats.js"></script>
+    </body>
+</html>
