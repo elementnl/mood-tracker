@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     calendarContainer.innerHTML = `
       <div class="mood-form">
         <h2>Edit Mood for ${formattedDate}</h2>
-        <form id="editMoodForm">
+        <form id="moodForm">
           <div class="mood-icons">
             ${Object.entries(moodConfig)
               .map(
@@ -217,23 +217,47 @@ document.addEventListener("DOMContentLoaded", () => {
               )
               .join("")}
           </div>
+  
           <label for="text_input">Edit Note (Optional):</label>
-          <textarea id="text_input" maxlength="150">${
+          <textarea id="text_input" name="text_input" maxlength="150" placeholder="Write a note about your day...">${
             currentText || ""
           }</textarea>
+          <span id="charCount" class="char-counter">${
+            (currentText || "").length
+          }/150</span>
+  
           <button type="submit">Update</button>
         </form>
       </div>
     `;
 
-    const editForm = document.getElementById("editMoodForm");
-    editForm.addEventListener("submit", (e) => {
+    // Character counter functionality
+    const noteInput = document.getElementById("text_input");
+    const charCounter = document.getElementById("charCount");
+    const maxLength = 150;
+
+    noteInput.addEventListener("input", () => {
+      const typed = noteInput.value.length;
+      charCounter.textContent = `${typed}/${maxLength}`;
+
+      if (typed > maxLength) {
+        charCounter.classList.add("exceeded");
+      } else {
+        charCounter.classList.remove("exceeded");
+      }
+    });
+
+    // Submit event listener
+    const moodForm = document.getElementById("moodForm");
+    moodForm.addEventListener("submit", (e) => {
       e.preventDefault();
+
       const updatedMood = document.querySelector(
         "input[name='mood']:checked"
       ).value;
-      const updatedText = document.getElementById("text_input").value;
+      const updatedText = noteInput.value;
 
+      // Send the updated data to the server
       fetch(`/api/moods/${day}`, {
         method: "POST",
         headers: {
@@ -242,13 +266,18 @@ document.addEventListener("DOMContentLoaded", () => {
         body: `mood=${updatedMood}&text_input=${encodeURIComponent(
           updatedText
         )}`,
-      }).then((response) => {
-        if (response.ok) {
-          window.location.reload();
-        } else {
-          alert("Failed to update mood.");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            alert("Failed to update mood. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating mood:", error);
+          alert("An unexpected error occurred.");
+        });
     });
   }
 });

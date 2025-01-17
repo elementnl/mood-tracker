@@ -392,14 +392,17 @@ h1 {
 }
 
 .mood-form textarea {
-  width: 100%;
+  width: 100%; /* Full width */
+  height: 100px; /* Large enough for 150 characters */
   padding: 10px;
-  margin-bottom: 1px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
   color: #333;
+  resize: none; /* Prevent resizing */
+  overflow: hidden; /* Prevent scrollbars */
   outline: none;
+  box-sizing: border-box; /* Include padding in width/height */
 }
 
 .mood-form button {
