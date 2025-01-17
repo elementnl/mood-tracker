@@ -168,11 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to display mood details
   function showMoodDetails({ day, mood, text_input }) {
-    const formattedDate = new Date(day).toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "2-digit",
-    });
+    // Parse the `day` string (YYYY-MM-DD) into a local date
+    const [year, month, date] = day.split("-").map(Number);
+    const formattedDate = new Date(year, month - 1, date).toLocaleDateString(
+      "en-US",
+      {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+      }
+    );
 
     calendarContainer.innerHTML = `
       <div class="mood-details">
@@ -188,15 +193,15 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.getElementById("editMood").addEventListener("click", () => {
-      showEditForm(day, mood, text_input);
+      showEditForm(day, mood, text_input, formattedDate);
     });
   }
 
   // Function to display edit form
-  function showEditForm(day, currentMood, currentText) {
+  function showEditForm(day, currentMood, currentText, formattedDate) {
     calendarContainer.innerHTML = `
       <div class="mood-form">
-        <h2>Edit Mood for ${day}</h2>
+        <h2>Edit Mood for ${formattedDate}</h2>
         <form id="editMoodForm">
           <div class="mood-icons">
             ${Object.entries(moodConfig)

@@ -502,3 +502,77 @@ textarea#note {
   text-align: center;
   font-size: 1.2rem;
 }
+
+/* General Mobile Styles */
+@media (max-width: 480px) {
+  /* Adjust calendar container for smaller screens */
+  .calendar-container {
+    padding: 15px;
+    max-width: 100%; /* Use full width on smaller screens */
+  }
+
+  .calendar-header {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: space-between; /* Keep space between title and navigation */
+    padding: 0 10px; /* Add padding for smaller screens */
+  }
+
+  .calendar-current-date {
+    font-size: 18px; /* Reduce size for mobile */
+    text-align: left; /* Center the title text */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+    margin: 0; /* Remove margins for compactness */
+  }
+
+  .calendar-navigation {
+    display: flex; /* Ensure navigation arrows remain aligned */
+    gap: 10px; /* Add space between the arrows */
+    font-size: 24px;
+  }
+
+  /* Adjust grid for dates */
+  .calendar-dates {
+    grid-template-columns: repeat(7, 1fr); /* Maintain 7 columns */
+    gap: 9px; /* Reduce gap between items */
+  }
+
+  .calendar-dates li {
+    font-size: 12px; /* Smaller font size for dates */
+    width: 30px; /* Smaller circle width */
+    height: 30px; /* Smaller circle height */
+  }
+
+  .calendar-dates li.active {
+    font-size: 16px;
+  }
+
+  /* Adjust weekdays */
+  .calendar-weekdays {
+    font-size: 12px; /* Reduce font size for weekdays */
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 10px;
+  }
+
+  .calendar-dates {
+    grid-template-columns: repeat(
+      7,
+      1fr
+    ); /* Still 7 columns, but smaller gaps */
+    gap: 7px; /* Further reduce gap */
+  }
+
+  .calendar-dates li {
+    font-size: 16px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .calendar-weekdays {
+    font-size: 10px; /* Very small font for weekdays */
+  }
+}
