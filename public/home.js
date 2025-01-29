@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ).value;
             const updatedNote = noteInput.value;
 
-            const today = new Date().toISOString().split("T")[0]; // Get today's date
+            const today = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York" });
 
             // Send the updated data to the correct endpoint
             fetch(`/api/moods/${today}`, {

@@ -58,13 +58,13 @@ app.get("/api/mood-today", async (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  let todayEST = moment().tz("America/New_York").format("YYYY-MM-DD");
 
   try {
     const { data, error } = await supabase
       .from("moods")
       .select("*")
-      .eq("day", today)
+      .eq("day", todayEST)
       .single();
 
     if (error && error.code !== "PGRST116") {
@@ -89,28 +89,29 @@ app.get("/api/mood-today", async (req, res) => {
 });
 
 // Submit a new mood
+const moment = require("moment-timezone");
+
 app.post("/submit-mood", async (req, res) => {
-  const today = new Date().toISOString().split("T")[0];
+  let todayEST = moment().tz("America/New_York").format("YYYY-MM-DD"); // Get current date in EST
+
   const { mood, text_input } = req.body;
 
-  if (!mood || isNaN(mood) || mood < 1 || mood > 5) {
-    return res
-      .status(400)
-      .send("Invalid mood rating. Please submit a number between 1 and 5.");
-  }
-
-  const { error } = await supabase.from("moods").upsert({
-    day: today,
-    mood: parseInt(mood, 10),
-    text_input: text_input || null,
-  });
+  const { error } = await supabase
+    .from("moods")
+    .insert([
+      {
+        day: todayEST,
+        mood: parseInt(mood, 10),
+        text_input: text_input || null,
+      },
+    ]);
 
   if (error) {
-    console.error("Error saving mood:", error.message);
-    return res.status(500).send("Failed to save mood.");
+    console.error("Error inserting mood:", error.message);
+    return res.status(500).send("Failed to submit mood.");
   }
 
-  res.redirect("/home");
+  res.status(200).send("Mood submitted successfully.");
 });
 
 // Update mood for a specific date
