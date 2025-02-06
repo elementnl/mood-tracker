@@ -96,15 +96,13 @@ app.post("/submit-mood", async (req, res) => {
 
   const { mood, text_input } = req.body;
 
-  const { error } = await supabase
-    .from("moods")
-    .insert([
-      {
-        day: todayEST,
-        mood: parseInt(mood, 10),
-        text_input: text_input || null,
-      },
-    ]);
+  const { error } = await supabase.from("moods").insert([
+    {
+      day: todayEST,
+      mood: parseInt(mood, 10),
+      text_input: text_input || null,
+    },
+  ]);
 
   if (error) {
     console.error("Error inserting mood:", error.message);
@@ -232,8 +230,11 @@ app.get("/api/analytics/streak", async (req, res) => {
       return res.json({ streak: 0, message: "No mood entries found." });
     }
 
-    // Calculate streak
-    const dates = data.map((entry) => entry.day);
+    // Convert all stored dates to EST before streak calculation
+    const dates = data.map((entry) =>
+      moment(entry.day).tz("America/New_York").format("YYYY-MM-DD")
+    );
+
     const streak = calculateStreak(dates);
 
     res.json({ streak });
@@ -245,17 +246,21 @@ app.get("/api/analytics/streak", async (req, res) => {
 
 // Helper function to calculate streak
 function calculateStreak(dates) {
+  if (!dates.length) return 0;
+
   let streak = 0;
-  let currentDate = new Date();
+  let today = moment().tz("America/New_York").startOf("day"); // Get today's date in EST
+  let currentDate = today.clone();
 
-  for (const date of dates) {
-    const formattedDate = new Date(date).toISOString().split("T")[0];
-    const expectedDate = currentDate.toISOString().split("T")[0];
+  for (const dateStr of dates) {
+    let entryDate = moment(dateStr).tz("America/New_York").startOf("day");
 
-    if (formattedDate === expectedDate) {
+    if (entryDate.isSame(currentDate, "day")) {
+      // If it matches today or the expected previous day, continue the streak
       streak++;
-      currentDate.setDate(currentDate.getDate() - 1); // Move to the previous day
-    } else {
+      currentDate.subtract(1, "day"); // Move to the previous day for the next comparison
+    } else if (entryDate.isBefore(currentDate, "day")) {
+      // If there is a gap in the streak, break
       break;
     }
   }
@@ -281,6 +286,32 @@ app.get("/stats", (req, res) => {
   }
   res.sendFile(path.join(__dirname, "views", "stats.html"));
 });
+
+app.get("/api/message", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("messages") // Ensure the table name is correct
+      .select("message")
+      .order("id", { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error("Supabase query error:", error.message);
+      return res.status(500).json({ error: "Database query error" });
+    }
+
+    if (!data || data.length === 0) {
+      return res.json({ message: null }); // No message to display
+    }
+
+    res.json({ message: data[0].message }); // Fix: Access the first item in the array
+  } catch (err) {
+    console.error("Unexpected server error:", err.message);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 
 // Start server
 app.listen(PORT, () => {

@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("/api/analytics/streak")
     .then((response) => response.json())
     .then(({ streak }) => {
+      const currentStreakElement = document.getElementById("currentStreak");
       currentStreakElement.textContent = `You’ve submitted moods for ${streak} consecutive day(s).`;
     })
     .catch((error) => {

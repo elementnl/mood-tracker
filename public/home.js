@@ -1,6 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const dashboard = document.getElementById("dashboard");
 
+  // Fetch and display the latest message if it exists
+  fetch("/api/message")
+    .then((response) => response.json())
+    .then(({ message }) => {
+      if (message) {
+        Swal.fire({
+          title: "Message From The Developer",
+          text: message,
+          icon: "info",
+          confirmButtonText: "Close",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching message:", error);
+    });
+
   fetch("/api/mood-today")
     .then((response) => response.json())
     .then((data) => {
@@ -176,7 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
             ).value;
             const updatedNote = noteInput.value;
 
-            const today = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York" });
+            const today = new Date().toLocaleDateString("en-US", {
+              timeZone: "America/New_York",
+            });
 
             // Send the updated data to the correct endpoint
             fetch(`/api/moods/${today}`, {
